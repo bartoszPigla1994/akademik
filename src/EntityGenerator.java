@@ -1,8 +1,6 @@
-import models.Akademik;
-import models.Osoba;
-import models.Pokoj;
-import models.Wyposazenie;
+import models.*;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -78,5 +76,20 @@ public class EntityGenerator {
 
     static int GenerateNumber(int min, int max) {
         return random.nextInt(max - min + 1) + min;
+    }
+
+    public static Oplata GenerateOplata(List<WniosekPK> pkWniosekList) {
+    }
+
+    public static Wniosek GenerateWniosek(int pkAkademik) {
+    }
+
+    public static Zgloszenie GenerateZgloszenie(List<PokojPK> pkPokojList, List<Integer> pkStudenciList) {
+    }
+
+    public static Rezerwacja GenerateRezerwacja(List<Integer> pkStudenciList, List<PokojPK> pkPokojList) {
+    }
+
+    public static Odwiedziny GenerateOdwiedziny(List<Integer> pkStudenciList, List<Integer> pkPortierzyList, List<Integer> pkGoscieList) {
     }
 }
