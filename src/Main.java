@@ -34,7 +34,8 @@ public class Main {
     }
 
     public static void main(final String[] args) throws Exception {
-        XmlFile file=new XmlFile(new URL("http://www.thomas-bayer.com/restnames/namesincountry.groovy?country=Poland)"));
+        XmlFile file = new XmlFile("src/resources/firstNames.xml");
+        //XmlFile file=new XmlFile(new URL("http://www.thomas-bayer.com/restnames/namesincountry.groovy?country=Poland)"));
         FirstNameGenerator firstNameGenerator=new FirstNameGenerator(file);
         System.out.println(firstNameGenerator.generateFirstName());
 

@@ -16,13 +16,13 @@ public class FirstNameGenerator {
 
     public FirstNameGenerator(XmlFile file){
         document=file.getDocument();
-        nodeList=document.getElementsByTagName("name");
+        nodeList=document.getElementsByTagName("nameinfo");
         firstNameNumber =nodeList.getLength();
     }
 
     public String generateFirstName(){
         int firstNameIndex = random.nextInt(firstNameNumber - 1);
-        Node node = nodeList.item(firstNameIndex);
-        return node.toString();
+        String firstName = nodeList.item(firstNameIndex).getTextContent();
+        return firstName;
     }
 }
