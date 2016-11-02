@@ -1,6 +1,4 @@
-import models.Akademik;
-import models.Pokoj;
-import models.PokojPK;
+import models.*;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.metadata.ClassMetadata;
@@ -14,7 +12,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import static java.lang.System.in;
 
 /**
  * Created by barte on 02/11/2016.
@@ -60,25 +62,32 @@ public class Main {
 
             int idAkademika = (int)session.save(akademik);
 
+            List<PokojPK>pkArrayList=new ArrayList<>(1000);
+
+            for(int i=0;i<1000;i++){
+                Pokoj pokoj = EntityGenerator.GeneratePokoj(idAkademika);
+                pkArrayList.add((PokojPK)session.save(pokoj));
+            }
+
+            for(PokojPK pokojPK : pkArrayList){
+                for(int i=0;i<3;i++){
+                    Wyposazenie w = EntityGenerator.GenerateWyposazenie(pokojPK.getIdPokoju());
+                    session.save(w);
+                }
+            }
+
+            List<Integer> pkOsobaList=new ArrayList<>(5000);
+            for(int i=0;i<5000;i++){
+                Osoba osoba=EntityGenerator.GenerateOsoba();
+                session.save(osoba);
+            }
 
 
-            Pokoj pokoj = EntityGenerator.GeneratePokoj(idAkademika);
-             session.save(pokoj);
 
-            System.out.println("Generated Identifier:"+ idAkademika);
+            //System.out.println("Generated Identifier:"+ idAkademika);
             session.getTransaction().commit();
             session.close();
-//            System.out.println("querying all the managed entities...");
-//            final Map metadataMap = session.getSessionFactory().getAllClassMetadata();
-//            for (Object key : metadataMap.keySet()) {
-//                final ClassMetadata classMetadata = (ClassMetadata) metadataMap.get(key);
-//                final String entityName = classMetadata.getEntityName();
-//                final Query query = session.createQuery("from " + entityName);
-//                System.out.println("executing: " + query.getQueryString());
-//                for (Object o : query.list()) {
-//                    System.out.println("  " + o);
-//                }
-//            }
+
         }
         catch (Exception exc){
             System.out.println(exc);
