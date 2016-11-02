@@ -1,10 +1,9 @@
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -17,11 +16,17 @@ public class XmlFile {
 
     public XmlFile(String fileName){
         String abs=(new File(fileName)).getAbsolutePath();
-        File fXmlFile = new File(fileName);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        try{
+        //InputSource is = new InputSource(abs);
+
+        try {
+            FileReader fileReader =
+                    new FileReader(abs);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            document = dBuilder.parse(fXmlFile);
+            document = dBuilder.parse(fileReader.toString());
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         catch (Exception exc){
 
