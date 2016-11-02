@@ -7,6 +7,7 @@ import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -33,21 +34,25 @@ public class Main {
     }
 
     public static void main(final String[] args) throws Exception {
-        final Session session = getSession();
-        try {
-            System.out.println("querying all the managed entities...");
-            final Map metadataMap = session.getSessionFactory().getAllClassMetadata();
-            for (Object key : metadataMap.keySet()) {
-                final ClassMetadata classMetadata = (ClassMetadata) metadataMap.get(key);
-                final String entityName = classMetadata.getEntityName();
-                final Query query = session.createQuery("from " + entityName);
-                System.out.println("executing: " + query.getQueryString());
-                for (Object o : query.list()) {
-                    System.out.println("  " + o);
-                }
-            }
-        } finally {
-            session.close();
-        }
+        XmlFile file=new XmlFile(new URL("http://www.thomas-bayer.com/restnames/namesincountry.groovy?country=Poland)"));
+        FirstNameGenerator firstNameGenerator=new FirstNameGenerator(file);
+        System.out.println(firstNameGenerator.generateFirstName());
+
+//        final Session session = getSession();
+//        try {
+//            System.out.println("querying all the managed entities...");
+//            final Map metadataMap = session.getSessionFactory().getAllClassMetadata();
+//            for (Object key : metadataMap.keySet()) {
+//                final ClassMetadata classMetadata = (ClassMetadata) metadataMap.get(key);
+//                final String entityName = classMetadata.getEntityName();
+//                final Query query = session.createQuery("from " + entityName);
+//                System.out.println("executing: " + query.getQueryString());
+//                for (Object o : query.list()) {
+//                    System.out.println("  " + o);
+//                }
+//            }
+//        } finally {
+//            session.close();
+//        }
     }
 }
