@@ -32,14 +32,14 @@ public class EntityGenerator {
         return wyposazenie;
     }
 
-    public static Osoba GenerateOsoba(){
+    public static Osoba GenerateOsoba(String[]typyOsob){
         Osoba osoba=new Osoba();
         osoba.setAdres(GenerateAdres());
         osoba.setImie(GenerateImie());
         osoba.setNazwisko(GenerateNazwisko());
         osoba.setPesel(GeneratePesel());
         osoba.setTel(GenerateTelefon());
-        osoba.setTyp(GenerateTyp());
+        osoba.setTyp(typyOsob[GenerateNumber(0,4)]);
         return osoba;
     }
 

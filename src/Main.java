@@ -33,6 +33,16 @@ public class Main {
                     .configure();
 
             configuration.addAnnotatedClass(models.Akademik.class);
+            configuration.addAnnotatedClass(models.Odwiedziny.class);
+            configuration.addAnnotatedClass(models.Oplata.class);
+            configuration.addAnnotatedClass(models.Osoba.class);
+            configuration.addAnnotatedClass(models.Pokoj.class);
+            configuration.addAnnotatedClass(models.Rezerwacja.class);
+            configuration.addAnnotatedClass(models.Wniosek.class);
+            configuration.addAnnotatedClass(models.Wyposazenie.class);
+            configuration.addAnnotatedClass(models.Zakwaterowanie.class);
+            configuration.addAnnotatedClass(models.Zgloszenie.class);
+
             configuration.addAnnotatedClass(models.Pokoj.class);
 
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
@@ -85,9 +95,16 @@ public class Main {
             List<Integer> pkPersonelList=new ArrayList<>(1000);
 
 
+            String[] typyOsob=new String[]{
+                "Student",
+                        "Portier",
+                        "Gosc",
+                        "Kierownik",
+                        "Personel"
+            };
 
             for(int i=0;i<5000;i++){
-                Osoba osoba=EntityGenerator.GenerateOsoba();
+                Osoba osoba=EntityGenerator.GenerateOsoba(typyOsob);
                 int pkOsoba=(int)session.save(osoba);
                 pkOsobaList.add(pkOsoba);
 
