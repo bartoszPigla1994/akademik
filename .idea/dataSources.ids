@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - mydb@localhost" uuid="ae4bebb6-5121-4acf-894d-8e2a5c410aef">
+    <database-info product="MySQL" version="5.7.16-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
+      <schema id="1" name="mydb"/>
+      <table id="2" parent="1" name="akademik"/>
+      <table id="3" parent="1" name="odwiedziny"/>
+      <table id="4" parent="1" name="oplata"/>
+      <table id="5" parent="1" name="osoba"/>
+      <table id="6" parent="1" name="pokoj"/>
+      <table id="7" parent="1" name="rezerwacja"/>
+      <table id="8" parent="1" name="wniosek"/>
+      <table id="9" parent="1" name="wyposazenie"/>
+      <table id="10" parent="1" name="zakwaterowanie"/>
+      <table id="11" parent="1" name="zgloszenie"/>
+      <column id="12" parent="2" name="IdAkademika">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="13" parent="2" name="Adres">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="14" parent="2" name="Sygnatura">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <key id="15" parent="2" name="PRIMARY">
+        <columns>IdAkademika</columns>
+        <primary>1</primary>
+      </key>
+      <column id="16" parent="3" name="IdOdwiedzin">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="17" parent="3" name="Data">
+        <data-type>date</data-type>
+      </column>
+      <column id="18" parent="3" name="Osoba_IdStudenta">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="19" parent="3" name="Osoba_IdPortiera">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="20" parent="3" name="Osoba_IdGoscia">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="21" parent="3" name="fk_Odwiedziny_Gosc_idx">
+        <columns>Osoba_IdGoscia</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="22" parent="3" name="fk_Odwiedziny_Portier_idx">
+        <columns>Osoba_IdPortiera</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="23" parent="3" name="fk_Odwiedziny_Student_idx">
+        <columns>Osoba_IdStudenta</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="24" parent="3" name="PRIMARY">
+        <columns>IdOdwiedzin
+Osoba_IdStudenta
+Osoba_IdPortiera
+Osoba_IdGoscia</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="25" parent="3" name="fk_Odwiedziny_Gosc">
+        <columns>Osoba_IdGoscia</columns>
+        <ref-key>~.osoba.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="26" parent="3" name="fk_Odwiedziny_Portier">
+        <columns>Osoba_IdPortiera</columns>
+        <ref-key>~.osoba.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="27" parent="3" name="fk_Odwiedziny_Student">
+        <columns>Osoba_IdStudenta</columns>
+        <ref-key>~.osoba.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="28" parent="4" name="IdOplaty">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="29" parent="4" name="Kwota">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="30" parent="4" name="Stan">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="31" parent="4" name="DataNalozenia">
+        <data-type>date</data-type>
+      </column>
+      <column id="32" parent="4" name="DataOplaty">
+        <data-type>date</data-type>
+      </column>
+      <column id="33" parent="4" name="Wniosek_IdWniosku">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="34" parent="4" name="fk_Oplata_Wniosek_idx">
+        <columns>Wniosek_IdWniosku</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="35" parent="4" name="PRIMARY">
+        <columns>IdOplaty
+Wniosek_IdWniosku</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="36" parent="4" name="fk_Oplata_Wniosek">
+        <columns>Wniosek_IdWniosku</columns>
+        <ref-key>mydb.wniosek(IdWniosku)</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="37" parent="5" name="IdOsoby">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="38" parent="5" name="Imie">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="39" parent="5" name="Nazwisko">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="40" parent="5" name="Pesel">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="41" parent="5" name="Adres">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="42" parent="5" name="Tel">
+        <data-type>varchar(15)</data-type>
+      </column>
+      <column id="43" parent="5" name="Typ">
+        <data-type>enum(&apos;Student&apos;, &apos;Portier&apos;, &apos;Gosc&apos;, &apos;Kierownik&apos;, &apos;Personel&apos;)</data-type>
+      </column>
+      <key id="44" parent="5" name="PRIMARY">
+        <columns>IdOsoby</columns>
+        <primary>1</primary>
+      </key>
+      <column id="45" parent="6" name="IdPokoju">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="46" parent="6" name="LiczbaMiejsc">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="47" parent="6" name="Pietro">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="48" parent="6" name="Cena">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="49" parent="6" name="Akademik_IdAkademika">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="50" parent="6" name="fk_Pokoj_Akademik_idx">
+        <columns>Akademik_IdAkademika</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="51" parent="6" name="PRIMARY">
+        <columns>IdPokoju
+Akademik_IdAkademika</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="52" parent="6" name="fk_Pokoj_Akademik1">
+        <columns>Akademik_IdAkademika</columns>
+        <ref-key>~.akademik.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="53" parent="7" name="IdRezerwacji">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="54" parent="7" name="DataPoczatek">
+        <data-type>date</data-type>
+      </column>
+      <column id="55" parent="7" name="DataKoniec">
+        <data-type>date</data-type>
+      </column>
+      <column id="56" parent="7" name="Pokoj_IdPokoju">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="57" parent="7" name="Osoba_IdPortiera">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="58" parent="7" name="fk_Rezerwacja_Osoba_idx">
+        <columns>Osoba_IdPortiera</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="59" parent="7" name="fk_Rezerwacja_Pokoj_idx">
+        <columns>Pokoj_IdPokoju</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="60" parent="7" name="PRIMARY">
+        <columns>IdRezerwacji
+Pokoj_IdPokoju
+Osoba_IdPortiera</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="61" parent="7" name="fk_Rezerwacja_Osoba">
+        <columns>Osoba_IdPortiera</columns>
+        <ref-key>~.osoba.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="62" parent="7" name="fk_Rezerwacja_Pokoj">
+        <columns>Pokoj_IdPokoju</columns>
+        <ref-key>mydb.pokoj(IdPokoju)</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="63" parent="8" name="IdWniosku">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="64" parent="8" name="DataZlozenia">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="65" parent="8" name="Stan">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="66" parent="8" name="Akademik_IdAkademika">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="67" parent="8" name="fk_Wniosek_Akademik_idx">
+        <columns>Akademik_IdAkademika</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="68" parent="8" name="PRIMARY">
+        <columns>IdWniosku
+Akademik_IdAkademika</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="69" parent="8" name="fk_Wniosek_Akademik">
+        <columns>Akademik_IdAkademika</columns>
+        <ref-key>~.akademik.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="70" parent="9" name="IdWyposazenia">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="71" parent="9" name="Nazwa">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="72" parent="9" name="Pokoj_IdPokoju">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="73" parent="9" name="fk_Wyposazenie_Pokoj_idx">
+        <columns>Pokoj_IdPokoju</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="74" parent="9" name="PRIMARY">
+        <columns>IdWyposazenia
+Pokoj_IdPokoju</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="75" parent="9" name="fk_Wyposazenie_Pokoj">
+        <columns>Pokoj_IdPokoju</columns>
+        <ref-key>mydb.pokoj(IdPokoju)</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="76" parent="10" name="IdZakwaterowania">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="77" parent="10" name="DataPoczatek">
+        <data-type>date</data-type>
+      </column>
+      <column id="78" parent="10" name="DataKoniec">
+        <data-type>date</data-type>
+      </column>
+      <column id="79" parent="10" name="Wniosek_IdWniosku">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="80" parent="10" name="Pokoj_idPokoju">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="81" parent="10" name="fk_Zakwaterowanie_Pokoj_idx">
+        <columns>Pokoj_idPokoju</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="82" parent="10" name="fk_Zakwaterowanie_Wniosek_idx">
+        <columns>Wniosek_IdWniosku</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="83" parent="10" name="PRIMARY">
+        <columns>IdZakwaterowania
+Wniosek_IdWniosku
+Pokoj_idPokoju</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="84" parent="10" name="fk_Zakwaterowanie_Pokoj">
+        <columns>Pokoj_idPokoju</columns>
+        <ref-key>mydb.pokoj(IdPokoju)</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="85" parent="10" name="fk_Zakwaterowanie_Wniosek">
+        <columns>Wniosek_IdWniosku</columns>
+        <ref-key>mydb.wniosek(IdWniosku)</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="86" parent="11" name="IdZgloszenia">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="87" parent="11" name="Temat">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="88" parent="11" name="Tresc">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="89" parent="11" name="DataZgloszenia">
+        <data-type>date</data-type>
+      </column>
+      <column id="90" parent="11" name="Stan">
+        <data-type>varchar(45)</data-type>
+      </column>
+      <column id="91" parent="11" name="Pokoj_IdPokoju">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="92" parent="11" name="Osoba_IdStudenta">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="93" parent="11" name="fk_Zgloszenie_Osoba_idx">
+        <columns>Osoba_IdStudenta</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="94" parent="11" name="fk_Zgloszenie_Pokoj_idx">
+        <columns>Pokoj_IdPokoju</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="95" parent="11" name="PRIMARY">
+        <columns>IdZgloszenia
+Pokoj_IdPokoju
+Osoba_IdStudenta</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="96" parent="11" name="fk_Zgloszenie_Osoba">
+        <columns>Osoba_IdStudenta</columns>
+        <ref-key>~.osoba.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="97" parent="11" name="fk_Zgloszenie_Pokoj">
+        <columns>Pokoj_IdPokoju</columns>
+        <ref-key>mydb.pokoj(IdPokoju)</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+    </database-model>
+  </data-source>
+</component>
