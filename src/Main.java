@@ -70,33 +70,48 @@ public class Main {
         final Session session = getSession();
         try {
             Akademik akademik = EntityGenerator.GenerateAkademik();
+            akademik.setIdAkademika(1);
             //Pokoj pokoj = EntityGenerator.GeneratePokoj(akademik.getIdAkademika());
 
             session.beginTransaction();
 
             int pkAkademik = (int)session.save(akademik);
 
+            session.getTransaction().commit();
             List<PokojPK>pkPokojList=new ArrayList<>(1000);
+            //int pkAkademik=1;
+            //int idPokoju=1;
+            session.beginTransaction();
+            for(int i=1;i<=1000;i++){
 
-            for(int i=0;i<1000;i++){
-                Pokoj pokoj = EntityGenerator.GeneratePokoj(pkAkademik);
-                pkPokojList.add((PokojPK)session.save(pokoj));
+
+                Pokoj pokoj = EntityGenerator.GeneratePokoj(i, pkAkademik);
+                PokojPK pokojPK=(PokojPK)session.save(pokoj);
+                //idPokoju++;
+                pkPokojList.add(pokojPK);
+
+
+                //session.close();
             }
-
+            session.getTransaction().commit();
+            //int idWyposazenia=1;
+            session.beginTransaction();
             for(PokojPK pokojPK : pkPokojList){
-                for(int i=0;i<3;i++){
-                    Wyposazenie w = EntityGenerator.GenerateWyposazenie(pokojPK.getIdPokoju());
+                for(int i=1;i<=3;i++){
+                    Wyposazenie w = EntityGenerator.GenerateWyposazenie(i, pokojPK.getIdPokoju());
+                    //idWyposazenia++;
                     session.save(w);
                 }
             }
+            session.getTransaction().commit();
 
             List<Integer> pkOsobaList=new ArrayList<>(5000);
 
-            List<Integer> pkPortierzyList=new ArrayList<>(1000);
-            List<Integer> pkStudenciList=new ArrayList<>(1000);
-            List<Integer> pkGoscieList=new ArrayList<>(1000);
-            List<Integer> pkKierownicyList = new ArrayList<>(1000);
-            List<Integer> pkPersonelList=new ArrayList<>(1000);
+            List<Integer> pkPortierzyList=new ArrayList<>();
+            List<Integer> pkStudenciList=new ArrayList<>();
+            List<Integer> pkGoscieList=new ArrayList<>();
+            List<Integer> pkKierownicyList = new ArrayList<>();
+            List<Integer> pkPersonelList=new ArrayList<>();
 
 
             String[] typyOsob=new String[]{
@@ -106,9 +121,9 @@ public class Main {
                         "Kierownik",
                         "Personel"
             };
-
-            for(int i=0;i<5000;i++){
-                Osoba osoba=EntityGenerator.GenerateOsoba(typyOsob);
+            session.beginTransaction();
+            for(int i=1;i<=5000;i++){
+                Osoba osoba=EntityGenerator.GenerateOsoba(i, typyOsob);
                 int pkOsoba=(int)session.save(osoba);
                 pkOsobaList.add(pkOsoba);
 
@@ -125,38 +140,49 @@ public class Main {
                 else if(typOsoby.equals("Personel"))
                     pkPersonelList.add(pkOsoba);
             }
-
+            session.getTransaction().commit();
             //List<OdwiedzinyPK>pkOdwiedziny=new ArrayList<>(7000);
-            for(int i=0;i<7000;i++){
-                Odwiedziny odwiedziny=EntityGenerator.GenerateOdwiedziny(pkStudenciList,pkPortierzyList,pkGoscieList);
+
+            session.beginTransaction();
+            for(int i=1;i<=7000;i++){
+                Odwiedziny odwiedziny=EntityGenerator.GenerateOdwiedziny(i, pkStudenciList,pkPortierzyList,pkGoscieList);
                 session.save(odwiedziny);
                 //pkOdwiedziny.add((OdwiedzinyPK)session.save(odwiedziny));
             }
+            session.getTransaction().commit();
 
-            for(int i=0;i<5000;i++){
-                Rezerwacja rezerwacja=EntityGenerator.GenerateRezerwacja(pkStudenciList,pkPokojList);
+            session.beginTransaction();
+            for(int i=1;i<=5000;i++){
+                Rezerwacja rezerwacja=EntityGenerator.GenerateRezerwacja(i,pkStudenciList,pkPokojList);
                 session.save(rezerwacja);
             }
+            session.getTransaction().commit();
 
-            for(int i=0;i<5000;i++){
-                Zgloszenie zgloszenie=EntityGenerator.GenerateZgloszenie(pkPokojList,pkStudenciList);
+            session.beginTransaction();
+            for(int i=1;i<=5000;i++){
+                Zgloszenie zgloszenie=EntityGenerator.GenerateZgloszenie(i,pkPokojList,pkStudenciList);
                 session.save(zgloszenie);
             }
+            session.getTransaction().commit();
 
+            session.beginTransaction();
             List<WniosekPK> pkWniosekList=new ArrayList<WniosekPK>(5000);
             for(int i=0;i<5000;i++){
-                Wniosek wniosek=EntityGenerator.GenerateWniosek(pkAkademik);
+                Wniosek wniosek=EntityGenerator.GenerateWniosek(i, pkAkademik);
                 pkWniosekList.add((WniosekPK)session.save(wniosek));
             }
+            session.getTransaction().commit();
 
-            for(int i=0;i<5000;i++){
-                Oplata oplata = EntityGenerator.GenerateOplata(pkWniosekList);
+
+            session.beginTransaction();
+            for(int i=1;i<=5000;i++){
+                Oplata oplata = EntityGenerator.GenerateOplata(i, pkWniosekList);
                 session.save(oplata);
             }
-
-            //System.out.println("Generated Identifier:"+ idAkademika);
             session.getTransaction().commit();
-            session.close();
+            //System.out.println("Generated Identifier:"+ idAkademika);
+//            session.getTransaction().commit();
+//            session.close();
 
         }
         catch (Exception exc){

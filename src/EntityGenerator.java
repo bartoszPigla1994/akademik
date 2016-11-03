@@ -46,8 +46,10 @@ public class EntityGenerator {
         return akademik;
     }
 
-    public static Pokoj GeneratePokoj(int idAkademika) {
+    public static Pokoj GeneratePokoj(int idPokoj, int idAkademika) {
         Pokoj pokoj = new Pokoj();
+        pokoj.setIdPokoju(idPokoj);
+
         pokoj.setAkademikIdAkademika(idAkademika);
         pokoj.setCena(GenerateNumber(100, 500));
         pokoj.setLiczbaMiejsc(GenerateNumber(2, 5));
@@ -55,15 +57,19 @@ public class EntityGenerator {
         return pokoj;
     }
 
-    public static Wyposazenie GenerateWyposazenie(int idPokoju){
+    public static Wyposazenie GenerateWyposazenie(int idWyp, int idPokoju){
         Wyposazenie wyposazenie=new Wyposazenie();
+        wyposazenie.setIdWyposazenia(idWyp);
+
         wyposazenie.setNazwa(GenerateWyposazenie());
         wyposazenie.setPokojIdPokoju(idPokoju);
         return wyposazenie;
     }
 
-    public static Osoba GenerateOsoba(String[]typyOsob){
+    public static Osoba GenerateOsoba(int idO, String[]typyOsob){
         Osoba osoba=new Osoba();
+        osoba.setIdOsoby(idO);
+
         osoba.setAdres(GenerateAdres());
         osoba.setImie(GenerateImie());
         osoba.setNazwisko(GenerateNazwisko());
@@ -73,8 +79,10 @@ public class EntityGenerator {
         return osoba;
     }
 
-    public static Oplata GenerateOplata(List<WniosekPK> pkWniosekList) {
+    public static Oplata GenerateOplata(int idOpl, List<WniosekPK> pkWniosekList) {
         Oplata oplata=new Oplata();
+        oplata.setIdOplaty(idOpl);
+
         oplata.setDataNalozenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
         oplata.setDataOplaty(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
         oplata.setKwota(GenerateNumber(100,500));
@@ -83,16 +91,20 @@ public class EntityGenerator {
         return oplata;
     }
 
-    public static Wniosek GenerateWniosek(int pkAkademik) {
+    public static Wniosek GenerateWniosek(int idW, int pkAkademik) {
         Wniosek wniosek = new Wniosek();
+        wniosek.setIdWniosku(idW);
+
         wniosek.setStan("przyjety");
         wniosek.setAkademikIdAkademika(pkAkademik);
         wniosek.setDataZlozenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
         return wniosek;
     }
 
-    public static Zgloszenie GenerateZgloszenie(List<PokojPK> pkPokojList, List<Integer> pkStudenciList) {
+    public static Zgloszenie GenerateZgloszenie(int idZ, List<PokojPK> pkPokojList, List<Integer> pkStudenciList) {
         Zgloszenie zgloszenie = new Zgloszenie();
+        zgloszenie.setIdZgloszenia(idZ);
+
         zgloszenie.setStan("gotowe");
         zgloszenie.setDataZgloszenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
         zgloszenie.setOsobaIdStudenta(GenerateCollectionItem(pkStudenciList));
@@ -103,8 +115,10 @@ public class EntityGenerator {
         return zgloszenie;
     }
 
-    public static Rezerwacja GenerateRezerwacja(List<Integer> pkStudenciList, List<PokojPK> pkPokojList) {
+    public static Rezerwacja GenerateRezerwacja(int idR, List<Integer> pkStudenciList, List<PokojPK> pkPokojList) {
         Rezerwacja rezerwacja = new Rezerwacja();
+        rezerwacja.setIdRezerwacji(idR);
+
         rezerwacja.setPokojIdPokoju(GenerateCollectionItem(pkPokojList).getIdPokoju());
         rezerwacja.setDataKoniec(GeneratData("2015-01-01 00:00:00","2015-12-31 00:58:00"));
         rezerwacja.setDataPoczatek(GeneratData("2012-01-01 00:00:00","2015-01-01 00:00:00"));
@@ -113,8 +127,10 @@ public class EntityGenerator {
         return rezerwacja;
     }
 
-    public static Odwiedziny GenerateOdwiedziny(List<Integer> pkStudenciList, List<Integer> pkPortierzyList, List<Integer> pkGoscieList) {
+    public static Odwiedziny GenerateOdwiedziny(int idOdw, List<Integer> pkStudenciList, List<Integer> pkPortierzyList, List<Integer> pkGoscieList) {
         Odwiedziny odwiedziny = new Odwiedziny();
+        odwiedziny.setIdOdwiedzin(idOdw);
+
         odwiedziny.setOsobaIdPortiera(GenerateCollectionItem(pkPortierzyList));
         odwiedziny.setOsobaIdGoscia(GenerateCollectionItem(pkGoscieList));
         odwiedziny.setOsobaIdStudenta(GenerateCollectionItem(pkStudenciList));
@@ -124,7 +140,7 @@ public class EntityGenerator {
     }
 
     private static <T> T GenerateCollectionItem(List<T> collection){
-        return collection.get(GenerateNumber(0,collection.size()));
+        return collection.get(GenerateNumber(0,collection.size()-1));
     }
 
     private static String GenerateTelefon() {
@@ -136,7 +152,7 @@ public class EntityGenerator {
     }
 
     private static Integer GeneratePesel() {
-        return 0;
+        return 55;
     }
 
     private static String GenerateTyp() {
@@ -192,21 +208,13 @@ public class EntityGenerator {
     }
 
     public static InputSource loadFile(String path){
-//        String xml = null;
-//        try {
-//            xml = new String(Files.readAllBytes(Paths.get(path)));
-//            //xml = xml.trim().replaceFirst("^([\\W]+)<","<");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return new InputSource(new StringReader(xml));
 
         boolean firstLine = true;
         StringBuilder sb = new StringBuilder();
         try{
             FileInputStream fis = new FileInputStream(path);
             BufferedReader r = new BufferedReader(new InputStreamReader(fis,
-                    "UTF-16"));
+                    "UTF-8"));
             for (String s = ""; (s = r.readLine()) != null;) {
                 if (firstLine) {
                     s = removeUTF8BOM(s);
@@ -222,21 +230,6 @@ public class EntityGenerator {
         }
         String xml=sb.toString();
         return new InputSource(new StringReader(xml));
-//
-//
-//
-//        String line;
-//        StringBuilder sb = new StringBuilder();
-//
-//        try {
-//
-//            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
-//            while((line=br.readLine())!= null){
-//                sb.append(line.trim());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private static String removeUTF8BOM(String s) {

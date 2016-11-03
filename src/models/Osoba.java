@@ -13,7 +13,7 @@ public class Osoba {
     private int idOsoby;
     private String imie;
     private String nazwisko;
-    private Integer pesel;
+    private int pesel;
     private String adres;
     private String tel;
     private String typ;
@@ -50,11 +50,11 @@ public class Osoba {
 
     @Basic
     @Column(name = "Pesel")
-    public Integer getPesel() {
+    public int getPesel() {
         return pesel;
     }
 
-    public void setPesel(Integer pesel) {
+    public void setPesel(int pesel) {
         this.pesel = pesel;
     }
 
@@ -98,7 +98,7 @@ public class Osoba {
         if (idOsoby != osoba.idOsoby) return false;
         if (imie != null ? !imie.equals(osoba.imie) : osoba.imie != null) return false;
         if (nazwisko != null ? !nazwisko.equals(osoba.nazwisko) : osoba.nazwisko != null) return false;
-        if (pesel != null ? !pesel.equals(osoba.pesel) : osoba.pesel != null) return false;
+        if (pesel != osoba.pesel) return false;
         if (adres != null ? !adres.equals(osoba.adres) : osoba.adres != null) return false;
         if (tel != null ? !tel.equals(osoba.tel) : osoba.tel != null) return false;
         if (typ != null ? !typ.equals(osoba.typ) : osoba.typ != null) return false;
@@ -111,7 +111,7 @@ public class Osoba {
         int result = idOsoby;
         result = 31 * result + (imie != null ? imie.hashCode() : 0);
         result = 31 * result + (nazwisko != null ? nazwisko.hashCode() : 0);
-        result = 31 * result + (pesel != null ? pesel.hashCode() : 0);
+        result = 31 * result + (pesel != 0 ? pesel : 0);
         result = 31 * result + (adres != null ? adres.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);
         result = 31 * result + (typ != null ? typ.hashCode() : 0);
