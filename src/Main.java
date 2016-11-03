@@ -70,6 +70,7 @@ public class Main {
             pkAkademik = (int)session.save(akademik);
 
             session.getTransaction().commit();
+
             List<PokojPK>pkPokojList=new ArrayList<>(1000);
 
             session.beginTransaction();
@@ -79,6 +80,7 @@ public class Main {
                 pkPokojList.add(pokojPK);
             }
             session.getTransaction().commit();
+
             session.beginTransaction();
             for(PokojPK pokojPK : pkPokojList){
                 for(int i=1;i<=3;i++){
@@ -153,6 +155,13 @@ public class Main {
             for(int i=1;i<=5000;i++){
                 Oplata oplata = EntityGenerator.GenerateOplata(i, pkWniosekList);
                 session.save(oplata);
+            }
+            session.getTransaction().commit();
+
+            session.beginTransaction();
+            for(int i=1;i<=5000;i++){
+                Zakwaterowanie zakwaterowanie = EntityGenerator.GenerateZakwaterowanie(i,pkPokojList, pkWniosekList);
+                session.save(zakwaterowanie);
             }
             session.getTransaction().commit();
         }

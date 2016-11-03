@@ -161,6 +161,18 @@ public class EntityGenerator {
         return odwiedziny;
     }
 
+    public static Zakwaterowanie GenerateZakwaterowanie(int idZ,List<PokojPK> pkPokojList,List<WniosekPK> pkWniosekList){
+        Zakwaterowanie zakwaterowanie=new Zakwaterowanie();
+        zakwaterowanie.setIdZakwaterowania(idZ);
+        zakwaterowanie.setPokojIdPokoju(GenerateCollectionItem(pkPokojList).getIdPokoju());
+        zakwaterowanie.setWniosekIdWniosku(GenerateCollectionItem(pkWniosekList).getIdWniosku());
+
+        zakwaterowanie.setDataKoniec(GeneratData("2015-01-01 00:00:00","2015-12-31 00:58:00"));
+        zakwaterowanie.setDataPoczatek(GeneratData("2012-01-01 00:00:00","2015-01-01 00:00:00"));
+        return zakwaterowanie;
+
+    }
+
     private static <T> T GenerateCollectionItem(List<T> collection){
         return collection.get(GenerateNumber(0,collection.size()-1));
     }
@@ -174,7 +186,44 @@ public class EntityGenerator {
     }
 
     private static Integer GeneratePesel() {
-        return 55;
+        StringBuilder stringBuilder=new StringBuilder();
+
+        stringBuilder
+                .append(GenerateNumber(8,9))
+                .append(GenerateNumber(0,9));
+
+        int monthFirstNumber=GenerateNumber(0,1);
+        int monthSecondNumber=0;
+
+        if(monthFirstNumber==0){
+            monthSecondNumber=GenerateNumber(1,9);
+        }
+        else{
+            monthSecondNumber=GenerateNumber(0,2);
+        }
+
+        int dayFirstNumber=GenerateNumber(0,2);
+        int daySecondNumber=0;
+        if(dayFirstNumber==0){
+            daySecondNumber=GenerateNumber(1,9);
+        }
+        else if(dayFirstNumber==1){
+            daySecondNumber=GenerateNumber(0,9);
+        }
+        else{
+            daySecondNumber=GenerateNumber(0,8);
+        }
+
+        stringBuilder
+                .append(monthFirstNumber)
+                .append(monthSecondNumber)
+                .append(dayFirstNumber)
+                .append(daySecondNumber)
+                .append(GenerateNumber(0,9))
+                .append(GenerateNumber(0,9))
+                .append(GenerateNumber(0,9));
+
+        return Integer.parseInt(stringBuilder.toString());
     }
 
     private static String GenerateTyp() {
