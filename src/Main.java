@@ -1,5 +1,6 @@
 import models.*;
 import org.hibernate.*;
+import org.hibernate.boot.jaxb.cfg.spi.ObjectFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.service.ServiceRegistry;
@@ -59,6 +60,15 @@ public class Main {
     }
 
     public static void main(final String[] args) throws Exception {
+
+        String[] typyOsob=new String[]{
+                "Student",
+                "Portier",
+                "Gosc",
+                "Kierownik",
+                "Personel"
+        };
+
         //XmlFile file = new XmlFile("src/resources/firstNames.xml");
         //XmlFile file=new XmlFile(new URL("http://www.thomas-bayer.com/restnames/namesincountry.groovy?country=Poland)"));
         //FirstNameGenerator firstNameGenerator=new FirstNameGenerator(file);
@@ -66,9 +76,20 @@ public class Main {
 
         String content = new String(Files.readAllBytes(Paths.get("src/address.xml")));
 
+
+
         //System.out.println(firstNameGenerator.generateFirstName());
         final Session session = getSession();
         try {
+//            Osoba o = EntityGenerator.GenerateOsoba(3,typyOsob);
+//
+//            session.beginTransaction();
+//
+//            Integer obj = (Integer)session.save(o);
+//
+//            session.getTransaction().commit();
+
+
             Akademik akademik = EntityGenerator.GenerateAkademik();
             akademik.setIdAkademika(1);
             //Pokoj pokoj = EntityGenerator.GeneratePokoj(akademik.getIdAkademika());
@@ -112,19 +133,13 @@ public class Main {
             List<Integer> pkGoscieList=new ArrayList<>();
             List<Integer> pkKierownicyList = new ArrayList<>();
             List<Integer> pkPersonelList=new ArrayList<>();
+            List<Osoba> osoby = new ArrayList<>();
 
-
-            String[] typyOsob=new String[]{
-                "Student",
-                        "Portier",
-                        "Gosc",
-                        "Kierownik",
-                        "Personel"
-            };
             session.beginTransaction();
             for(int i=1;i<=5000;i++){
                 Osoba osoba=EntityGenerator.GenerateOsoba(i, typyOsob);
-                int pkOsoba=(int)session.save(osoba);
+                osoby.add(osoba);
+                Integer pkOsoba=(Integer)session.save(osoba);
                 pkOsobaList.add(pkOsoba);
 
                 String typOsoby=osoba.getTyp();

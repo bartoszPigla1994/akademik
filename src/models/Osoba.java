@@ -98,7 +98,7 @@ public class Osoba {
         if (idOsoby != osoba.idOsoby) return false;
         if (imie != null ? !imie.equals(osoba.imie) : osoba.imie != null) return false;
         if (nazwisko != null ? !nazwisko.equals(osoba.nazwisko) : osoba.nazwisko != null) return false;
-        if (pesel != osoba.pesel) return false;
+        if (pesel != 0 ? pesel!=osoba.pesel : osoba.pesel != 0) return false;
         if (adres != null ? !adres.equals(osoba.adres) : osoba.adres != null) return false;
         if (tel != null ? !tel.equals(osoba.tel) : osoba.tel != null) return false;
         if (typ != null ? !typ.equals(osoba.typ) : osoba.typ != null) return false;
