@@ -27,20 +27,42 @@ public class EntityGenerator {
     static List<String> addressList = new ArrayList<String>();
     static List<String> wyposazenieList = new ArrayList<String>();
 
+    static String[] typyOsob=new String[]{
+            "Student",
+            "Portier",
+            "Gosc",
+            "Kierownik",
+            "Personel"
+    };
+
     static int namesCount;
     static int surnamesCount;
     static int addressCount;
     static int wyposazenieCount;
 
     static{
-        loadNames();
-        loadSurNames();
-        loadAddress();
-        loadWyposazenie();
+        namesList=loadDatas("src/firstNames.xml","firstName");
+        namesCount=namesList.size();
+
+        surNamesList=loadDatas("src/surNames.xml","surName");
+        surnamesCount=surNamesList.size();
+
+        addressList=loadDatas("src/address.xml","address");
+        addressCount=addressList.size();
+
+        wyposazenieList=loadDatas("src/wyposazenia.xml","wyposazenie");
+        wyposazenieCount=wyposazenieList.size();
+
+//        loadNames();
+//        loadSurNames();
+//        loadAddress();
+//        loadWyposazenie();
     }
 
-    public static Akademik GenerateAkademik() {
+    public static Akademik GenerateAkademik(int pkAkademik) {
         Akademik akademik = new Akademik();
+
+        akademik.setIdAkademika(pkAkademik);
         akademik.setAdres(GenerateAdres());
         akademik.setSygnatura(GenerateSygnatura());
         return akademik;
@@ -66,7 +88,7 @@ public class EntityGenerator {
         return wyposazenie;
     }
 
-    public static Osoba GenerateOsoba(int idO, String[]typyOsob){
+    public static Osoba GenerateOsoba(int idO){
         Osoba osoba=new Osoba();
         osoba.setIdOsoby(idO);
 
@@ -170,31 +192,19 @@ public class EntityGenerator {
     }
 
     static String GenerateWyposazenie(){
-//        if(wyposazenieList.size() == 0){
-//            loadWyposazenie();
-//        }
         int index = random.nextInt(wyposazenieCount);
         return wyposazenieList.get(index);
     }
 
     static String GenerateAdres(){
-//        if(addressList.size() == 0){
-//            loadAddress();
-//        }
         int index = random.nextInt(addressCount);
         return addressList.get(index);
     }
     static String GenerateImie(){
-//        if(namesList.size() == 0){
-//            loadNames();
-//        }
         int index = random.nextInt(namesCount);
         return namesList.get(index);
     }
     static String GenerateNazwisko(){
-//        if(surNamesList.size() == 0){
-//            loadSurNames();
-//        }
         int index = random.nextInt(surnamesCount);
         return surNamesList.get(index);
     }
@@ -239,94 +249,114 @@ public class EntityGenerator {
         return s;
     }
 
-    public static void loadNames(){
-
-
-
+    public static List<String> loadDatas(String path, String xmlElementName){
+        List<String>list=new ArrayList<String>();
         try {
             DocumentBuilderFactory dbFactory
                     = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(loadFile("src/firstNames.xml"));
+            Document doc = dBuilder.parse(loadFile(path));
             doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("firstName");
-            namesCount=nList.getLength();
-            for (int temp = 0; temp < namesCount; temp++) {
+            NodeList nList = doc.getElementsByTagName(xmlElementName);
+
+            for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    namesList.add(eElement.getTextContent());
+                    list.add(eElement.getTextContent());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return list;
     }
+//
+//    public static void loadNames(){
+//        try {
+//            DocumentBuilderFactory dbFactory
+//                    = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(loadFile("src/firstNames.xml"));
+//            doc.getDocumentElement().normalize();
+//            NodeList nList = doc.getElementsByTagName("firstName");
+//            namesCount=nList.getLength();
+//            for (int temp = 0; temp < namesCount; temp++) {
+//                Node nNode = nList.item(temp);
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//                    Element eElement = (Element) nNode;
+//                    namesList.add(eElement.getTextContent());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void loadSurNames(){
+//        try {
+//            DocumentBuilderFactory dbFactory
+//                    = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(loadFile("src/surNames.xml"));
+//            doc.getDocumentElement().normalize();
+//            NodeList nList = doc.getElementsByTagName("surName");
+//            surnamesCount=nList.getLength();
+//            for (int temp = 0; temp < surnamesCount; temp++) {
+//                Node nNode = nList.item(temp);
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//                    Element eElement = (Element) nNode;
+//                    surNamesList.add(eElement.getTextContent());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void loadAddress(){
+//        try {
+//
+////            File inputFile = new File("src/address.xml");
+////            String absolutePath=inputFile.getAbsolutePath();
+//            //InputStream is=new
+//            DocumentBuilderFactory dbFactory
+//                    = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(loadFile("src/address.xml"));
+//            doc.getDocumentElement().normalize();
+//            NodeList nList = doc.getElementsByTagName("address");
+//            addressCount=nList.getLength();
+//            for (int temp = 0; temp < addressCount; temp++) {
+//                Node nNode = nList.item(temp);
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//                    Element eElement = (Element) nNode;
+//                    addressList.add(eElement.getTextContent());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void loadWyposazenie(){
+//        try {
+//            DocumentBuilderFactory dbFactory
+//                    = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(loadFile("src/wyposazenia.xml"));
+//            doc.getDocumentElement().normalize();
+//            NodeList nList = doc.getElementsByTagName("wyposazenie");
+//            wyposazenieCount=nList.getLength();
+//            for (int temp = 0; temp < wyposazenieCount; temp++) {
+//                Node nNode = nList.item(temp);
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//                    Element eElement = (Element) nNode;
+//                    wyposazenieList.add(eElement.getTextContent());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-    public static void loadSurNames(){
-        try {
-            DocumentBuilderFactory dbFactory
-                    = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(loadFile("src/surNames.xml"));
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("surName");
-            surnamesCount=nList.getLength();
-            for (int temp = 0; temp < surnamesCount; temp++) {
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    surNamesList.add(eElement.getTextContent());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void loadAddress(){
-        try {
-
-//            File inputFile = new File("src/address.xml");
-//            String absolutePath=inputFile.getAbsolutePath();
-            //InputStream is=new
-            DocumentBuilderFactory dbFactory
-                    = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(loadFile("src/address.xml"));
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("address");
-            addressCount=nList.getLength();
-            for (int temp = 0; temp < addressCount; temp++) {
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    addressList.add(eElement.getTextContent());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void loadWyposazenie(){
-        try {
-            DocumentBuilderFactory dbFactory
-                    = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(loadFile("src/wyposazenia.xml"));
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("wyposazenie");
-            wyposazenieCount=nList.getLength();
-            for (int temp = 0; temp < wyposazenieCount; temp++) {
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    wyposazenieList.add(eElement.getTextContent());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

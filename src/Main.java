@@ -60,67 +60,29 @@ public class Main {
     }
 
     public static void main(final String[] args) throws Exception {
-
-        String[] typyOsob=new String[]{
-                "Student",
-                "Portier",
-                "Gosc",
-                "Kierownik",
-                "Personel"
-        };
-
-        //XmlFile file = new XmlFile("src/resources/firstNames.xml");
-        //XmlFile file=new XmlFile(new URL("http://www.thomas-bayer.com/restnames/namesincountry.groovy?country=Poland)"));
-        //FirstNameGenerator firstNameGenerator=new FirstNameGenerator(file);
-        // This will reference one line at a time
-
-        String content = new String(Files.readAllBytes(Paths.get("src/address.xml")));
-
-
-
-        //System.out.println(firstNameGenerator.generateFirstName());
         final Session session = getSession();
         try {
-//            Osoba o = EntityGenerator.GenerateOsoba(3,typyOsob);
-//
-//            session.beginTransaction();
-//
-//            Integer obj = (Integer)session.save(o);
-//
-//            session.getTransaction().commit();
-
-
-            Akademik akademik = EntityGenerator.GenerateAkademik();
-            akademik.setIdAkademika(1);
-            //Pokoj pokoj = EntityGenerator.GeneratePokoj(akademik.getIdAkademika());
+            int pkAkademik=1;
+            Akademik akademik = EntityGenerator.GenerateAkademik(pkAkademik);
 
             session.beginTransaction();
 
-            int pkAkademik = (int)session.save(akademik);
+            pkAkademik = (int)session.save(akademik);
 
             session.getTransaction().commit();
             List<PokojPK>pkPokojList=new ArrayList<>(1000);
-            //int pkAkademik=1;
-            //int idPokoju=1;
+
             session.beginTransaction();
             for(int i=1;i<=1000;i++){
-
-
                 Pokoj pokoj = EntityGenerator.GeneratePokoj(i, pkAkademik);
                 PokojPK pokojPK=(PokojPK)session.save(pokoj);
-                //idPokoju++;
                 pkPokojList.add(pokojPK);
-
-
-                //session.close();
             }
             session.getTransaction().commit();
-            //int idWyposazenia=1;
             session.beginTransaction();
             for(PokojPK pokojPK : pkPokojList){
                 for(int i=1;i<=3;i++){
                     Wyposazenie w = EntityGenerator.GenerateWyposazenie(i, pokojPK.getIdPokoju());
-                    //idWyposazenia++;
                     session.save(w);
                 }
             }
@@ -137,7 +99,7 @@ public class Main {
 
             session.beginTransaction();
             for(int i=1;i<=5000;i++){
-                Osoba osoba=EntityGenerator.GenerateOsoba(i, typyOsob);
+                Osoba osoba=EntityGenerator.GenerateOsoba(i);
                 osoby.add(osoba);
                 Integer pkOsoba=(Integer)session.save(osoba);
                 pkOsobaList.add(pkOsoba);
@@ -156,13 +118,11 @@ public class Main {
                     pkPersonelList.add(pkOsoba);
             }
             session.getTransaction().commit();
-            //List<OdwiedzinyPK>pkOdwiedziny=new ArrayList<>(7000);
 
             session.beginTransaction();
             for(int i=1;i<=7000;i++){
                 Odwiedziny odwiedziny=EntityGenerator.GenerateOdwiedziny(i, pkStudenciList,pkPortierzyList,pkGoscieList);
                 session.save(odwiedziny);
-                //pkOdwiedziny.add((OdwiedzinyPK)session.save(odwiedziny));
             }
             session.getTransaction().commit();
 
@@ -195,10 +155,6 @@ public class Main {
                 session.save(oplata);
             }
             session.getTransaction().commit();
-            //System.out.println("Generated Identifier:"+ idAkademika);
-//            session.getTransaction().commit();
-//            session.close();
-
         }
         catch (Exception exc){
             System.out.println(exc);
