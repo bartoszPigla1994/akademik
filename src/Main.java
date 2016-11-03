@@ -12,6 +12,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +63,8 @@ public class Main {
         //XmlFile file=new XmlFile(new URL("http://www.thomas-bayer.com/restnames/namesincountry.groovy?country=Poland)"));
         //FirstNameGenerator firstNameGenerator=new FirstNameGenerator(file);
         // This will reference one line at a time
+
+        String content = new String(Files.readAllBytes(Paths.get("src/address.xml")));
 
         //System.out.println(firstNameGenerator.generateFirstName());
         final Session session = getSession();

@@ -1,15 +1,16 @@
 package models;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
- * Created by barte on 02/11/2016.
+ * Created by barte on 03/11/2016.
  */
 @Entity
 @IdClass(WniosekPK.class)
 public class Wniosek {
     private int idWniosku;
-    private String dataZlozenia;
+    private Date dataZlozenia;
     private String stan;
     private int akademikIdAkademika;
 
@@ -25,11 +26,11 @@ public class Wniosek {
 
     @Basic
     @Column(name = "DataZlozenia")
-    public String getDataZlozenia() {
+    public Date getDataZlozenia() {
         return dataZlozenia;
     }
 
-    public void setDataZlozenia(String dataZlozenia) {
+    public void setDataZlozenia(Date dataZlozenia) {
         this.dataZlozenia = dataZlozenia;
     }
 

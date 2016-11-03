@@ -18,7 +18,17 @@
         <mapping class="models.Wyposazenie"/>
         <mapping class="models.Zakwaterowanie"/>
         <mapping class="models.Zgloszenie"/>
-        <mapping class="models.Wyposazenie"/>
+        <!--<mapping class="models.Akademik"/>-->
+        <!--<mapping class="models.Odwiedziny"/>-->
+        <!--<mapping class="models.Oplata"/>-->
+        <!--<mapping class="models.Osoba"/>-->
+        <!--<mapping class="models.Pokoj"/>-->
+        <!--<mapping class="models.Rezerwacja"/>-->
+        <!--<mapping class="models.Wniosek"/>-->
+        <!--<mapping class="models.Wyposazenie"/>-->
+        <!--<mapping class="models.Zakwaterowanie"/>-->
+        <!--<mapping class="models.Zgloszenie"/>-->
+        <!--<mapping class="models.Wyposazenie"/>-->
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
