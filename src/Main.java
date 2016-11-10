@@ -59,7 +59,7 @@ public class Main {
         return ourSessionFactory.openSession();
     }
 
-    public static void main(final String[] args) throws Exception {
+    public static void GenerateRows(){
         final Session session = getSession();
         try {
             int pkAkademik=1;
@@ -88,6 +88,7 @@ public class Main {
                     session.save(w);
                 }
             }
+
             session.getTransaction().commit();
 
             List<Integer> pkOsobaList=new ArrayList<>(5000);
@@ -171,5 +172,34 @@ public class Main {
         finally {
             session.close();
         }
+    }
+
+    public static void GenerateOdwiedzinyWithNotExistingForeignKey(){
+        List<Integer> notExistingFk=new ArrayList<>();
+        notExistingFk.add(11000);
+
+        Odwiedziny o=EntityGenerator.GenerateOdwiedziny(7001,notExistingFk,notExistingFk,notExistingFk);
+
+        final Session session = getSession();
+
+        try{
+            session.beginTransaction();
+
+            session.save(o);
+
+            session.getTransaction().commit();
+        }
+        catch (Exception exc){
+            System.out.println(exc);
+        }
+        finally{
+            session.close();
+        }
+
+    }
+
+    public static void main(final String[] args) throws Exception {
+        //GenerateRows();
+        GenerateOdwiedzinyWithNotExistingForeignKey();
     }
 }
