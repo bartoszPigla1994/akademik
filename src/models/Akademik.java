@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by barte on 03/11/2016.
+ * Created by barte on 16/11/2016.
  */
 @Entity
 public class Akademik {

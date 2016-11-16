@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by barte on 03/11/2016.
+ * Created by barte on 16/11/2016.
  */
 @Entity
 @IdClass(WniosekPK.class)

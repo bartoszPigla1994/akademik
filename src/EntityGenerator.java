@@ -105,8 +105,10 @@ public class EntityGenerator {
         Oplata oplata=new Oplata();
         oplata.setIdOplaty(idOpl);
 
-        oplata.setDataNalozenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
-        oplata.setDataOplaty(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
+
+
+        oplata.setDataNalozenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00",false));
+        oplata.setDataOplaty(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00",true));
         oplata.setKwota(GenerateNumber(100,500));
         oplata.setStan("zaplacono");
         oplata.setWniosekIdWniosku(GenerateCollectionItem(pkWniosekList).getIdWniosku());
@@ -119,7 +121,7 @@ public class EntityGenerator {
 
         wniosek.setStan("przyjety");
         wniosek.setAkademikIdAkademika(pkAkademik);
-        wniosek.setDataZlozenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
+        wniosek.setDataZlozenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00",false));
         return wniosek;
     }
 
@@ -128,7 +130,7 @@ public class EntityGenerator {
         zgloszenie.setIdZgloszenia(idZ);
 
         zgloszenie.setStan("gotowe");
-        zgloszenie.setDataZgloszenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
+        zgloszenie.setDataZgloszenia(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00",false));
         zgloszenie.setOsobaIdStudenta(GenerateCollectionItem(pkStudenciList));
         zgloszenie.setPokojIdPokoju(GenerateCollectionItem(pkPokojList).getIdPokoju());
         zgloszenie.setTemat("zgloszenie o przyjecie");
@@ -142,8 +144,8 @@ public class EntityGenerator {
         rezerwacja.setIdRezerwacji(idR);
 
         rezerwacja.setPokojIdPokoju(GenerateCollectionItem(pkPokojList).getIdPokoju());
-        rezerwacja.setDataKoniec(GeneratData("2015-01-01 00:00:00","2015-12-31 00:58:00"));
-        rezerwacja.setDataPoczatek(GeneratData("2012-01-01 00:00:00","2015-01-01 00:00:00"));
+        rezerwacja.setDataKoniec(GeneratData("2015-01-01 00:00:00","2015-12-31 00:58:00",false));
+        rezerwacja.setDataPoczatek(GeneratData("2012-01-01 00:00:00","2015-01-01 00:00:00",false));
         rezerwacja.setOsobaIdPortiera(GenerateCollectionItem(pkStudenciList));
 
         return rezerwacja;
@@ -156,7 +158,7 @@ public class EntityGenerator {
         odwiedziny.setOsobaIdPortiera(GenerateCollectionItem(pkPortierzyList));
         odwiedziny.setOsobaIdGoscia(GenerateCollectionItem(pkGoscieList));
         odwiedziny.setOsobaIdStudenta(GenerateCollectionItem(pkStudenciList));
-        odwiedziny.setData(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00"));
+        odwiedziny.setData(GeneratData("2010-01-01 00:00:00","2015-12-31 00:58:00",false));
 
         return odwiedziny;
     }
@@ -167,8 +169,8 @@ public class EntityGenerator {
         zakwaterowanie.setPokojIdPokoju(GenerateCollectionItem(pkPokojList).getIdPokoju());
         zakwaterowanie.setWniosekIdWniosku(GenerateCollectionItem(pkWniosekList).getIdWniosku());
 
-        zakwaterowanie.setDataKoniec(GeneratData("2015-01-01 00:00:00","2015-12-31 00:58:00"));
-        zakwaterowanie.setDataPoczatek(GeneratData("2012-01-01 00:00:00","2015-01-01 00:00:00"));
+        zakwaterowanie.setDataKoniec(GeneratData("2015-01-01 00:00:00","2015-12-31 00:58:00",false));
+        zakwaterowanie.setDataPoczatek(GeneratData("2012-01-01 00:00:00","2015-01-01 00:00:00",false));
         return zakwaterowanie;
 
     }
@@ -185,7 +187,7 @@ public class EntityGenerator {
         return tel;
     }
 
-    private static Integer GeneratePesel() {
+    private static String GeneratePesel() {
         StringBuilder stringBuilder=new StringBuilder();
 
         stringBuilder
@@ -221,16 +223,21 @@ public class EntityGenerator {
                 .append(daySecondNumber)
                 .append(GenerateNumber(0,9))
                 .append(GenerateNumber(0,9))
+                .append(GenerateNumber(0,9))
+                .append(GenerateNumber(0,9))
                 .append(GenerateNumber(0,9));
 
-        return Integer.parseInt(stringBuilder.toString());
+        return stringBuilder.toString();
     }
 
     private static String GenerateTyp() {
         return "";
     }
 
-    static java.sql.Date GeneratData(String beginTimeStr, String endTimeStr){
+    static java.sql.Date GeneratData(String beginTimeStr, String endTimeStr, boolean canBeNull){
+        if(canBeNull && GenerateNumber(0,1)==0)
+            return null;
+
         long beginTime = Timestamp.valueOf(beginTimeStr).getTime();
         long endTime = Timestamp.valueOf(endTimeStr).getTime();
 

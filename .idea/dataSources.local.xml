@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="hibernate.cfg.xml/Hibernate" uuid="a502590a-de04-4d97-a930-233dc6e30e0c">
-      <user-name>root</user-name>
-      <user-password>dfc0dfcedfc8dfc9df90dfc7dfd3dfd9dfdbdfc6df90df85df85dfc6dfc5dfc9dfcbdfc6dfc2dfc5dfd9dfdedf90df99df99df9adf9cdf85dfc7dfd3dfcedfc8</user-password>
-    </data-source>
-    <data-source name="MySQL - mydb@localhost" uuid="9309557c-6b4b-4ad8-84f0-92a43c938902">
+    <data-source name="MySQL - mydb@localhost" uuid="61333f26-8c09-4e65-92c0-cc30f6298b5f">
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
+      <schema-pattern>mydb.*</schema-pattern>
+      <default-schemas>mydb.*</default-schemas>
     </data-source>
   </component>
 </project>
